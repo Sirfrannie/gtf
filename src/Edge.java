@@ -15,6 +15,23 @@ public class Edge
         this.label = label;
         this.weight = weight;
     }
+    public Edge(String label, int weight, Vertex v1, Vertex v2){
+        vertices = new ArrayList<>();
+        this.label = label;
+        this.weight = weight;
+        if (v1 == v2 ){
+            this.vertices.add(v1);
+            v1.addEdge(this);
+        }else {
+            this.vertices.add(v1);
+            v1.addEdge(this);
+            v1.addConnection(v2);
+            this.vertices.add(v2);
+            v2.addEdge(this);
+            v2.addConnection(v1);
+        }
+
+    }
     public Edge(String label, int weight, ArrayList<Vertex> v, String v1, String v2){
         vertices = new ArrayList<>();
         this.label = label;
@@ -70,7 +87,7 @@ public class Edge
     }
     @Override
     public String toString(){
-        String o = "edges [";
+        String o = "edges "+this.label+" [";
         for (Vertex v : vertices){
             o += v +" ";
         }
