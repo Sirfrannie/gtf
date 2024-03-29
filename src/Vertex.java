@@ -24,6 +24,9 @@ public class Vertex
             }
         }
     }
+    public void addConnection(Vertex v){
+        this.connection.add(v);
+    }
 
     public ArrayList<Edge> getEdges(){
         return this.edges;

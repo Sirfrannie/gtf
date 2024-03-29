@@ -7,6 +7,14 @@ public class Graph
     public Graph(){
         vertices = new ArrayList<>();
         edges = new ArrayList<>();
+    }
+    public void addVertex(String label){
+        vertices.add(new Vertex(label));
+    }
+    public void addEdge(String label, int weight, Vertex v1, Vertex v2){
+        edges.add(new Edge(label, weight, v1, v2));
+    }
+    public void p1(){
         vertices.add(new Vertex("Washington"));
         vertices.add(new Vertex("Montana"));
         vertices.add(new Vertex("Minnesota"));
