@@ -16,6 +16,7 @@ public class Vertex
     }
     public void addEdge(Edge e){
         this.edges.add(e);
+        addDegree();
     }
     public void addConnection(ArrayList<Vertex> v, String label){
         for (int i=0; i<v.size(); ++i){
@@ -28,6 +29,9 @@ public class Vertex
         this.connection.add(v);
     }
 
+    public ArrayList<Vertex> getConnection(){
+        return this.connection;
+    }
     public ArrayList<Edge> getEdges(){
         return this.edges;
     }

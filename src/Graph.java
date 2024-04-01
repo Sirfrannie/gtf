@@ -11,9 +11,37 @@ public class Graph
     public void addVertex(String label){
         vertices.add(new Vertex(label));
     }
-    public void addEdge(String label, int weight, Vertex v1, Vertex v2){
+    public boolean addEdge(String label, int weight, Vertex v1, Vertex v2){
+        // cancel adding the edge if two vertex already have a connection
+        if (v1.getConnection().contains(v2)){
+            return false;
+        }
         edges.add(new Edge(label, weight, v1, v2));
+        return true;
     }
+    public boolean addEdge(String label, int weight, Vertex v){
+        if (v.getConnection().contains(v)) return false;
+        edges.add(new Edge(label, weight, v));
+        return true;
+    }
+    public void removeVertex(Vertex v){
+        this.vertices.remove(v);
+        // remove all edge that involve with this vertex
+        for (int i=0; i<edges.size(); ++i){
+            if (edges.get(i).getVertices().contains(v)) {
+                removeEdge(edges.get(i));
+                --i; // after removing ArrayList will resize and shift element
+            }
+        }
+    }
+    public void removeEdge(Edge e){
+        this.edges.remove(e);
+        // remove this edge in each vertex's edge list which contains this edge
+        for (Vertex v : this.vertices){
+            if (v.getEdges().contains(e)) v.getEdges().remove(e);
+        }
+    }
+    // preset graph
     public void p1(){
         vertices.add(new Vertex("Washington"));
         vertices.add(new Vertex("Montana"));
