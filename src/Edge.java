@@ -6,14 +6,13 @@ public class Edge
     private int weight; // weight of edge ( value )
     private ArrayList<Vertex> vertices; // vertices which this edge connects
 
-    public Edge(String label){
-        vertices = new ArrayList<>();
-        this.label = label;
-    }
-    public Edge(String label, int weight){
+    public Edge(String label, int weight, Vertex v){
         vertices = new ArrayList<>();
         this.label = label;
         this.weight = weight;
+        this.vertices.add(v);
+        v.addEdge(this);
+        v.addConnection(v);
     }
     public Edge(String label, int weight, Vertex v1, Vertex v2){
         vertices = new ArrayList<>();
@@ -91,7 +90,7 @@ public class Edge
         for (Vertex v : vertices){
             o += v +" ";
         }
-        o += "]";
+        o += "\b]";
         return o; 
     }
     
