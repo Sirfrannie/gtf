@@ -7,9 +7,11 @@ public class Table
 {
     ArrayList<Vertex> vertices;    
     ArrayList<Edge> edges;
+    Graph graph;
     public Table(Graph g){
         this.vertices = g.getVertices();
         this.edges = g.getEdges();
+        this.graph = g;
     }
     public JTable verticesTable(){
         String columnNames[] = {"Label", "degree", "edges", "connection"}; 
@@ -19,8 +21,7 @@ public class Table
             if ( v.getDegree() == 0 ){
                 arr = new String[] {v.getLabel(), ""+v.getDegree()};
                 data.add(new ArrayList(Arrays.asList(arr)));
-                // arr = new String[] {"_______","_______","_______","_______"};
-                arr = new String[] {"_______","_______","_______","_______"};
+                arr = new String[] {"______________","______________","______________","______________"};
                 data.add(new ArrayList(Arrays.asList(arr)));
                 continue;
             }
@@ -30,7 +31,7 @@ public class Table
                 arr = new String[]{"", "", v.getEdges().get(i).getLabel(), v.getConnection().get(i).getLabel()};
                 data.add(new ArrayList(Arrays.asList(arr)));
             }
-            arr = new String[]{"_______","_______","_______","_______"};
+            arr = new String[]{"______________","______________","______________","______________"};
             data.add(new ArrayList(Arrays.asList(arr)));
         }
         // turn ArrayList<ArrayList<String>> to String[][]
@@ -58,6 +59,56 @@ public class Table
             }else{
                 arr = new String[]{e.getLabel(), ""+e.getWeight(), e.getVertices().get(0).getLabel()+", "+e.getVertices().get(0).getLabel()};
             }
+            data.add(new ArrayList(Arrays.asList(arr)));
+        }
+        // turn ArrayList<ArrayList<String>> to String[][]
+        String[][] newData = data.stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
+        // create table
+        JTable table = new JTable(newData, columnNames);
+        table.setModel(new DefaultTableModel(newData, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        });
+        table.getTableHeader().setReorderingAllowed(false);
+
+        return table;
+    }
+    public JTable primMST(){
+        String columnNames[] = {"Vertex", "Edge", "Vertex", "Total weight"};        
+        ArrayList<Edge> tree = new Prim(graph).getMST();
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        int sumWeight = 0;
+        for (Edge e : tree){
+            sumWeight += e.getWeight();
+            String arr[] = {e.getVertices().get(0).getLabel(), e.getLabel()+" ("+e.getWeight()+")", e.getVertices().get(1).getLabel(), sumWeight+""};
+            data.add(new ArrayList(Arrays.asList(arr)));
+        }
+        // turn ArrayList<ArrayList<String>> to String[][]
+        String[][] newData = data.stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
+        // create table
+        JTable table = new JTable(newData, columnNames);
+        table.setModel(new DefaultTableModel(newData, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        });
+        table.getTableHeader().setReorderingAllowed(false);
+
+        return table;
+    }
+    public JTable kruskalMST(){
+        String columnNames[] = {"Vertex", "Edge", "Vertex", "Total weight"};        
+        ArrayList<Edge> tree = new Kruskal(graph).getMST();
+
+        ArrayList<ArrayList<String>> data = new ArrayList<>();
+        int sumWeight = 0;
+        for (Edge e : tree){
+            sumWeight += e.getWeight();
+            String arr[] = {e.getVertices().get(0).getLabel(), e.getLabel()+" ("+e.getWeight()+")", e.getVertices().get(1).getLabel(), sumWeight+""};
             data.add(new ArrayList(Arrays.asList(arr)));
         }
         // turn ArrayList<ArrayList<String>> to String[][]

@@ -7,12 +7,11 @@ public class Vertex {
     private ArrayList<Vertex> connection = new ArrayList<>(); // List of vertices that connected with this vertex
     private int index; // Unique index for each vertex
 
-    public Vertex(String label, int index) {
+    public Vertex(String label) {
         this.label = label;
         this.edges = new ArrayList<>();
-        this.index = index;
     }
-
+    
     public void addDegree() {
         this.degree += 1;
     }
@@ -49,8 +48,8 @@ public class Vertex {
         return this.label;
     }
 
-    public int getIndex() {
-        return this.index;
+    public int getIndex(ArrayList<Vertex> v) {
+        return v.indexOf(this);
     }
 
     public void setIndex(int index) {

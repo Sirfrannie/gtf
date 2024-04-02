@@ -20,15 +20,27 @@ public class Prim {
         while (!pq.isEmpty()) {
             Edge edge = pq.poll();
             Vertex v = edge.getVertices().get(1);
-            if (visited[v.getIndex()]) continue;
-            visited[v.getIndex()] = true;
+            if (visited[v.getIndex(graph.getVertices())]) continue;
+            visited[v.getIndex(graph.getVertices())] = true;
             result.add(edge);
             for (Edge e : v.getEdges()) {
-                if (!visited[e.getVertices().get(1).getIndex()]) {
+                if (!visited[e.getVertices().get(1).getIndex(graph.getVertices())]) {
                     pq.add(e);
                 }
             }
         }
         return result;
+    }
+    public static void main(String args[]){
+        Graph g = new Graph();
+        g.p1();
+        Prim p = new Prim(g);
+        int sum = 0;
+        System.out.println("Prim");
+        for (Edge e : p.getMST()){
+            System.out.println(e+ " \""+e.getWeight());
+            sum += e.getWeight();
+        }
+        System.out.println(sum);
     }
 }
