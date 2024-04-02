@@ -16,11 +16,23 @@ public class Kruskal {
         for (Edge edge : graph.getEdges()) {
             Vertex v1 = edge.getVertices().get(0);
             Vertex v2 = edge.getVertices().get(1);
-            if (ds.find(v1.getIndex()) != ds.find(v2.getIndex())) {
-                ds.union(v1.getIndex(), v2.getIndex());
+            if (ds.find(v1.getIndex(graph.getVertices())) != ds.find(v2.getIndex(graph.getVertices()))) {
+                ds.union(v1.getIndex(graph.getVertices()), v2.getIndex(graph.getVertices()));
                 result.add(edge);
             }
         }
         return result;
+    }
+    public static void main(String args[]){
+        Graph g = new Graph();
+        g.p1();
+        Kruskal p = new Kruskal(g);
+        int sum = 0;
+        System.out.println("Kruskal");
+        for (Edge e : p.getMST()){
+            System.out.println(e+ " \""+e.getWeight());
+            sum += e.getWeight();
+        }
+        System.out.println(sum);
     }
 }

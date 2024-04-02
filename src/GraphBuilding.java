@@ -40,6 +40,16 @@ public class GraphBuilding extends Panel
         super();
         graph = new Graph();
         this.insets = height-frame.getInsets().top;
+        buildComponents(frame);
+    }
+    public GraphBuilding(JFrame frame, Graph graph){
+        super();
+        this.graph = graph;
+        this.insets = height-frame.getInsets().top;
+        buildComponents(frame);
+    }
+    // button and Label are handling here
+    private void buildComponents(JFrame frame){
         e.addActionListener((e) -> {
             this.setVisible(false);
             frame.add(new Menu(frame));
@@ -48,7 +58,9 @@ public class GraphBuilding extends Panel
         e.setBounds(10, insets-35, 60, 30);
         e.setVisible(true);
         c.addActionListener((e) -> {
-            System.out.println(graph);
+            this.setVisible(false);
+            frame.add(new Algorithm(frame, graph));
+            frame.remove(this);
         });
         c.setBounds(1150, insets-35, 120, 30);
         c.setVisible(true);
